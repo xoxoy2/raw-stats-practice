@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background: lightblue;
+}
+
+table {
+  color: darkgray;
+  padding: 20px;
+  margin: 20px;
+  border: 5px solid black;
+  background: yellow;
+}
+
+.player-cell {
+  display: flex;
+  width: 200px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.player-cell-name a {
+  color: black;
+  font-weight: 600;
+}
+
+.player-cell-school {
+  font-size: 12px;
+}
