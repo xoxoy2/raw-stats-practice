@@ -1,47 +1,31 @@
+// Global Variables
+const form = document.querySelector("form");
+const formInputs = document.querySelectorAll(".form-input");
+
+console.log(formInputs);
+
 const formState = {
   firstName: "",
   lastName: "",
   touchdowns: "",
   yards: "",
+  // position: "",
+  // school: {
+  //   name: "MMHS",
+  //   city: "Spring Valley",
+  // }
 };
 
-const players = [
-  {
-    firstName: "Josh",
-    lastName: "Allen",
-    touchdowns: 35,
-    yards: 4544,
-    id: 1,
-  },
-  {
-    firstName: "Patrick",
-    lastName: "Mahomes",
-    touchdowns: 38,
-    yards: 4740,
-    id: 2,
-  },
-  {
-    firstName: "Dak",
-    lastName: "Prescott",
-    touchdowns: 27,
-    yards: 4035,
-    id: 3,
-  },
-  {
-    firstName: "Tom",
-    lastName: "Brady",
-    touchdowns: 40,
-    yards: 4633,
-    id: 4,
-  },
-  {
-    firstName: "Joe",
-    lastName: "Burrow",
-    touchdowns: 34,
-    yards: 4166,
-    id: 5,
-  },
-];
+const getPlayersFromStorage = () => {
+  const playersFromStorage = JSON.parse(localStorage.getItem("players"));
+  return playersFromStorage || [];
+};
+
+const savePlayersToStorage = (players) => {
+  localStorage.setItem("players", JSON.stringify(players));
+};
+
+const players = getPlayersFromStorage();
 
 /*
 <tr>
@@ -81,8 +65,8 @@ const createPlayerRow = (player) => {
   // nameA.textContent = player.firstName + " " + player.lastName;
   // string interpolation (template literal)
   nameA.textContent = `${player.firstName} ${player.lastName}`;
-  positionSpan.textContent = "QB";
-  schoolP.textContent = "MMHS (Spring Valley)";
+  positionSpan.textContent = " QB"; // player.position
+  schoolP.textContent = "MMHS (Spring Valley)"; // player.school
   touchdownsTd.textContent = player.touchdowns;
   yardsTd.textContent = player.yards;
 
@@ -108,6 +92,29 @@ function renderPlayerRows(playerList) {
   }
 }
 
+// function that updates form state on change event
+const handleInputChange = (event) => {
+  const name = event.target.name; // "firstName", "lastName", "touchdowns", "yards"
+  formState[name] = event.target.value;
+  console.log(formState);
+};
+
+const handleFormSubmit = (event) => {
+  event.preventDefault();
+  // create a new player object with data from the form state
+  const newPlayer = { ...formState };
+  // add that player object to the players array
+  // TODO when server is set up, instead of pushing to the array, you'll send a POST request with the new player info
+  players.push(newPlayer);
+  savePlayersToStorage(players);
+  // re-render the player rows
+  renderPlayerRows(players);
+  // clear the form inputs
+  formInputs.forEach((input) => {
+    input.value = "";
+  });
+};
+
 /*
  TODO:
  1. create a function to track the data being typed in the form (handleFormInput)
@@ -116,4 +123,15 @@ function renderPlayerRows(playerList) {
    b. re-render the player rows
  */
 
+// add change event listeners to all the input elements on the form
+const addInputEventListeners = () => {
+  formInputs.forEach((input) => {
+    input.addEventListener("change", handleInputChange);
+  });
+};
+
+// add submit event listener to the form
+form.addEventListener("submit", handleFormSubmit);
+
 renderPlayerRows(players);
+addInputEventListeners();
