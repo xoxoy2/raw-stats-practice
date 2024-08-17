@@ -21,11 +21,22 @@ const getPlayersFromStorage = () => {
   return playersFromStorage || [];
 };
 
+const fetchAllPlayers = async () => {
+  try {
+    const response = await fetch("http://localhost:3000/api/players");
+    console.log(response);
+    const players = await response.json();
+    console.log(players);
+    // return players;
+    renderPlayerRows(players);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const savePlayersToStorage = (players) => {
   localStorage.setItem("players", JSON.stringify(players));
 };
-
-const players = getPlayersFromStorage();
 
 /*
 <tr>
@@ -99,28 +110,44 @@ const handleInputChange = (event) => {
   console.log(formState);
 };
 
-const handleFormSubmit = (event) => {
+const handleFormSubmit = async (event) => {
   event.preventDefault();
-  // create a new player object with data from the form state
   const newPlayer = { ...formState };
+  try {
+    const response = await fetch("http://localhost:3000/api/players", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPlayer),
+    });
+    console.log(response);
+    const data = await response.json(); // { message: "Player added" }
+    console.log(data);
+    fetchAllPlayers();
+    formInputs.forEach((input) => {
+      input.value = "";
+    });
+  } catch (error) {
+    console.error(error);
+  }
+  // create a new player object with data from the form state
   // add that player object to the players array
   // TODO when server is set up, instead of pushing to the array, you'll send a POST request with the new player info
-  players.push(newPlayer);
-  savePlayersToStorage(players);
+  // players.push(newPlayer);
+  // savePlayersToStorage(players);
   // re-render the player rows
-  renderPlayerRows(players);
+  // renderPlayerRows(players);
   // clear the form inputs
-  formInputs.forEach((input) => {
-    input.value = "";
-  });
 };
 
 /*
  TODO:
- 1. create a function to track the data being typed in the form (handleFormInput)
- 2. create a function to handle the form submission (handleFormSubmit)
-   a. add the new player object to the players array
-   b. re-render the player rows
+ 1. Write a js sorting function to sort by different parameters
+    a. explore js .sort method for arrays
+    b. customize .sort method for sorting function
+2. add event listeners for user to click different sort params
  */
 
 // add change event listeners to all the input elements on the form
@@ -133,5 +160,6 @@ const addInputEventListeners = () => {
 // add submit event listener to the form
 form.addEventListener("submit", handleFormSubmit);
 
-renderPlayerRows(players);
+// renderPlayerRows(players);
+fetchAllPlayers();
 addInputEventListeners();
