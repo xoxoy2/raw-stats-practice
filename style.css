@@ -31,3 +31,9 @@ table {
 .player-cell-school {
   font-size: 12px;
 }
+
+.active {
+  font-weight: 900;
+  color: black;
+  opacity: 1;
+}

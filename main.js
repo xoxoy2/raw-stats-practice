@@ -1,8 +1,17 @@
 // Global Variables
 const form = document.querySelector("form");
 const formInputs = document.querySelectorAll(".form-input");
+const sortButtons = document.querySelectorAll("th");
 
-console.log(formInputs);
+const playerState = {
+  players: [],
+};
+
+const sortingState = {
+  lastName: "desc",
+  touchdowns: "asc",
+  yards: "asc",
+};
 
 const formState = {
   firstName: "",
@@ -28,6 +37,7 @@ const fetchAllPlayers = async () => {
     const players = await response.json();
     console.log(players);
     // return players;
+    playerState.players = players;
     renderPlayerRows(players);
   } catch (error) {
     console.error(error);
@@ -38,21 +48,7 @@ const savePlayersToStorage = (players) => {
   localStorage.setItem("players", JSON.stringify(players));
 };
 
-/*
-<tr>
-          <td class="player-cell">
-            <p>1</p>
-            <div>
-              <p class="player-cell-name"><a>Matthew Barton</a> <span>QB</span></p>
-              <p class="player-cell-school">MMHS (Spring Valley)</p>
-            </div>
-          </td>
-          <td>581</td>
-          <td>79,204</td>
-        </tr>
-*/
-
-const createPlayerRow = (player) => {
+const createPlayerRow = (player, index) => {
   // create the elements
   const tr = document.createElement("tr");
   const nameTd = document.createElement("td");
@@ -71,7 +67,7 @@ const createPlayerRow = (player) => {
   schoolP.classList.add("player-cell-school");
 
   // add the text content
-  numberP.textContent = player.id;
+  numberP.textContent = index;
   // string concatenation
   // nameA.textContent = player.firstName + " " + player.lastName;
   // string interpolation (template literal)
@@ -97,8 +93,8 @@ function renderPlayerRows(playerList) {
   //   const playerRow = createPlayerRow(player);
   //   tbody.append(playerRow);
   // });
-  for (let player of playerList) {
-    const playerRow = createPlayerRow(player);
+  for (let i = 0; i < playerList.length; i++) {
+    const playerRow = createPlayerRow(playerList[i], i + 1);
     tbody.append(playerRow);
   }
 }
@@ -132,28 +128,60 @@ const handleFormSubmit = async (event) => {
   } catch (error) {
     console.error(error);
   }
-  // create a new player object with data from the form state
-  // add that player object to the players array
-  // TODO when server is set up, instead of pushing to the array, you'll send a POST request with the new player info
-  // players.push(newPlayer);
-  // savePlayersToStorage(players);
-  // re-render the player rows
-  // renderPlayerRows(players);
-  // clear the form inputs
 };
 
 /*
  TODO:
- 1. Write a js sorting function to sort by different parameters
-    a. explore js .sort method for arrays
-    b. customize .sort method for sorting function
-2. add event listeners for user to click different sort params
+ 1. adding filtering logic
+  a. add select dropdowns for position and school filtering
+  b. function to returned filtered array
+  c. render the filtered array
+2. finish sorting logic (asc and desc)
  */
 
+// function that sorts the players array by a given key
+const sortPlayers = (param, playerArray) => {
+  return playerArray.sort((a, b) => {
+    if (a[param] > b[param]) {
+      // if the param is asc, return 1 else return
+      return param === "lastName" ? 1 : -1;
+    }
+    if (a[param] < b[param]) {
+      return param === "lastName" ? -1 : 1;
+    }
+    return 0;
+  });
+};
+
+// function that handles click on sort buttons
+const handleSortClick = (event) => {
+  console.log(event.target.dataset);
+  // find and remove current active class if present as well as active icon
+  const currentActive = document.querySelector(".active");
+  if (currentActive) {
+    currentActive.classList.remove("active");
+    const nodeToRemove = currentActive.querySelector("i");
+    currentActive.removeChild(nodeToRemove);
+  }
+  event.target.classList.add("active");
+  // adding icon
+  const sortIcon = document.createElement("i");
+  sortIcon.classList.add("fa-solid", "fa-chevron-up");
+  event.target.appendChild(sortIcon);
+  // removing current icon:
+  const param = event.target.dataset.param;
+  sortingState[param] = sortingState[param] === "asc" ? "desc" : "asc";
+  const sortedPlayers = sortPlayers(param, playerState.players);
+  renderPlayerRows(sortedPlayers);
+};
+
 // add change event listeners to all the input elements on the form
-const addInputEventListeners = () => {
+const addEventListeners = () => {
   formInputs.forEach((input) => {
     input.addEventListener("change", handleInputChange);
+  });
+  sortButtons.forEach((button) => {
+    button.addEventListener("click", handleSortClick);
   });
 };
 
@@ -162,4 +190,4 @@ form.addEventListener("submit", handleFormSubmit);
 
 // renderPlayerRows(players);
 fetchAllPlayers();
-addInputEventListeners();
+addEventListeners();
