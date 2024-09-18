@@ -1,6 +1,9 @@
 const { players } = require("../data.js");
+const { Player } = require("../models");
 
-const getAllPlayers = (req, res) => {
+const getAllPlayers = async (req, res) => {
+  // get all players using Player model
+  const players = await Player.findAll();
   res.json(players);
 };
 
