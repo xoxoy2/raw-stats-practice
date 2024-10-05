@@ -3,7 +3,7 @@ const { Player } = require("../models");
 
 const getAllPlayers = async (req, res) => {
   // get all players using Player model
-  const players = await Player.findAll();
+  // const players = await Player.findAll();
   res.json(players);
 };
 

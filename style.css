@@ -9,11 +9,17 @@ header {
 }
 
 table {
-  color: darkgray;
+  color: black;
+  font-weight: 400;
   padding: 20px;
   margin: 20px;
   border: 5px solid black;
-  background: yellow;
+  /* background: yellow; */
+}
+
+th,
+td {
+  padding: 0 10px;
 }
 
 .player-cell {
