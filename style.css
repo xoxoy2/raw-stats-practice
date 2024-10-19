@@ -43,3 +43,8 @@ td {
   color: black;
   opacity: 1;
 }
+
+.filter-buttons {
+  display: flex;
+  justify-content: space-between;
+}

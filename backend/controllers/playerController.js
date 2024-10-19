@@ -1,5 +1,5 @@
 const { players } = require("../data.js");
-const { Player } = require("../models");
+// const { Player } = require("../models");
 
 const getAllPlayers = async (req, res) => {
   // get all players using Player model

@@ -1,6 +1,16 @@
 const collegeSelect = new SlimSelect({
-  select: "#multi-select",
+  select: "#college-select",
   placeholder: "Select college(s)",
+});
+
+const positionSelect = new SlimSelect({
+  select: "#position-select",
+  placeholder: "Select position",
+});
+
+const nameSelect = new SlimSelect({
+  select: "#name-select",
+  placeholder: "Select Player Name",
 });
 
 // Global Variables
@@ -17,7 +27,8 @@ const playerState = {
 
 const filterState = {
   college: [],
-  position: "",
+  position: [],
+  name: [],
 };
 
 const sortingState = {
@@ -56,24 +67,31 @@ const getPositions = (players) => {
   return new Set(positions);
 };
 
+const getNames = (players) => {
+  const names = players
+    .map((player) => `${player.firstName} ${player.lastName}`)
+    .sort();
+  return new Set(names);
+};
+
 const createAndAppendOptions = (players) => {
   getColleges(players).forEach((college) => {
     const option = document.createElement("option");
     option.value = college;
     option.textContent = college;
-    document.querySelector("#filter-college").append(option);
+    document.querySelector("#college-select").append(option);
   });
   getPositions(players).forEach((position) => {
     const option = document.createElement("option");
     option.value = position;
     option.textContent = position;
-    document.querySelector("#filter-position").append(option);
+    document.querySelector("#position-select").append(option);
   });
-  getColleges(players).forEach((college) => {
+  getNames(players).forEach((name) => {
     const option = document.createElement("option");
-    option.value = college;
-    option.textContent = college;
-    document.querySelector("#multi-select").append(option);
+    option.value = name;
+    option.textContent = name;
+    document.querySelector("#name-select").append(option);
   });
 };
 
@@ -164,7 +182,11 @@ const handleFilterChange = (e) => {
 
 const applyMultiSelectFilter = (players) => {
   playerState.filteredPlayers = players.filter((player) => {
-    return filterState.college.includes(player.college);
+    return (
+      filterState.college.includes(player.college) ||
+      filterState.position.includes(player.position) ||
+      filterState.name.includes(`${player.firstName} ${player.lastName}`)
+    );
   });
   renderPlayerRows(playerState.filteredPlayers);
 };
@@ -215,11 +237,13 @@ const handleFormSubmit = async (event) => {
 
 /*
  TODO:
-1. multi select on the position filter dropdowns
-2. finalize search button click logic to filter both position and colleges
-3. clear filters button and handler function
-3. finish setting up controllers on backend with sequelize models
-4. test routes with postman
+1. Initial search/filter shows exact matches (ex. where BOTH college and position match)
+2. If no exact matches, show a message that says "No players found, show partial matches?
+3. update applyMultiSelectFilter to show exact matches
+4. create new function that shows partial matches
+5. add a button that toggles between exact and partial matches
+6. finish setting up controllers on backend with sequelize models
+7. test routes with postman
  */
 
 // function that sorts the players array by a given key
@@ -270,18 +294,33 @@ const addEventListeners = () => {
 // add submit event listener to the form
 form.addEventListener("submit", handleFormSubmit);
 
-collegeFilterSelect.addEventListener("change", handleFilterChange);
-positionFilterSelect.addEventListener("change", handleFilterChange);
-
 // renderPlayerRows(players);
 fetchAllPlayers();
 addEventListeners();
 
-document.getElementById("multi-select").addEventListener("change", (e) => {
+document.getElementById("college-select").addEventListener("change", (e) => {
   filterState.college = collegeSelect.selected();
+  console.log(filterState);
+});
+document.getElementById("position-select").addEventListener("change", (e) => {
+  filterState.position = positionSelect.selected();
+  console.log(filterState);
+});
+document.getElementById("name-select").addEventListener("change", (e) => {
+  filterState.name = nameSelect.selected();
   console.log(filterState);
 });
 
 document.getElementById("apply-filters").addEventListener("click", (e) => {
   applyMultiSelectFilter(playerState.players);
+});
+
+document.getElementById("clear-filters").addEventListener("click", (e) => {
+  filterState.college = [];
+  filterState.position = [];
+  filterState.name = [];
+  collegeSelect.set([]);
+  positionSelect.set([]);
+  nameSelect.set([]);
+  renderPlayerRows(playerState.players);
 });

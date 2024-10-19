@@ -53,16 +53,13 @@
       <button type="submit">Add Player</button>
     </form>
     <div class="filters">
-      <label for="filter-college">Filter by college:</label>
-      <select id="filter-college" name="college">
-        <option value="">All</option>
-      </select>
-      <label for="filter-position">Filter by position:</label>
-      <select id="filter-position" name="position">
-        <option value="">All</option>
-      </select>
-      <select multiple id="multi-select"></select>
-      <button id="apply-filters">Search</button>
+      <select multiple id="college-select"></select>
+      <select multiple id="position-select"></select>
+      <select multiple id="name-select"></select>
+      <div class="filter-buttons">
+        <button id="apply-filters">Search</button>
+        <button id="clear-filters">Clear Filters</button>
+      </div>
     </div>
 
     <table>
