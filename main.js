@@ -1,3 +1,14 @@
+// GLOBAL DOM ELEMENTS
+const form = document.querySelector("form");
+const formInputs = document.querySelectorAll(".form-input");
+const sortButtons = document.querySelectorAll("th");
+const collegeFilterSelect = document.querySelector("#filter-college");
+const positionFilterSelect = document.querySelector("#filter-position");
+
+//----------------------------
+// SLIM SELECT
+//----------------------------
+
 const collegeSelect = new SlimSelect({
   select: "#college-select",
   placeholder: "Select college(s)",
@@ -13,12 +24,9 @@ const nameSelect = new SlimSelect({
   placeholder: "Select Player Name",
 });
 
-// Global Variables
-const form = document.querySelector("form");
-const formInputs = document.querySelectorAll(".form-input");
-const sortButtons = document.querySelectorAll("th");
-const collegeFilterSelect = document.querySelector("#filter-college");
-const positionFilterSelect = document.querySelector("#filter-position");
+//----------------------------
+// STATE MANAGEMENT
+//----------------------------
 
 const playerState = {
   players: [],
@@ -51,6 +59,10 @@ const formState = {
   // }
 };
 
+//----------------------------
+// HELPER FUNCTIONS
+//----------------------------
+
 const getColleges = (players) => {
   const colleges = players
     .map((player) => player.college)
@@ -74,6 +86,38 @@ const getNames = (players) => {
   return new Set(names);
 };
 
+//----------------------------
+// API AND DATA MANAGEMENT FUNCTIONS
+//----------------------------
+
+const getPlayersFromStorage = () => {
+  const playersFromStorage = JSON.parse(localStorage.getItem("players"));
+  return playersFromStorage || [];
+};
+
+const savePlayersToStorage = (players) => {
+  localStorage.setItem("players", JSON.stringify(players));
+};
+
+const fetchAllPlayers = async () => {
+  try {
+    const response = await fetch("http://localhost:3000/api/players");
+    console.log(response);
+    const players = await response.json();
+    console.log(players);
+    // return players;
+    playerState.players = players;
+    createAndAppendOptions(players);
+    renderPlayerRows(players);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+//----------------------------
+// DOM MANIPULATION FUNCTIONS
+//----------------------------
+
 const createAndAppendOptions = (players) => {
   getColleges(players).forEach((college) => {
     const option = document.createElement("option");
@@ -93,30 +137,6 @@ const createAndAppendOptions = (players) => {
     option.textContent = name;
     document.querySelector("#name-select").append(option);
   });
-};
-
-const getPlayersFromStorage = () => {
-  const playersFromStorage = JSON.parse(localStorage.getItem("players"));
-  return playersFromStorage || [];
-};
-
-const fetchAllPlayers = async () => {
-  try {
-    const response = await fetch("http://localhost:3000/api/players");
-    console.log(response);
-    const players = await response.json();
-    console.log(players);
-    // return players;
-    playerState.players = players;
-    createAndAppendOptions(players);
-    renderPlayerRows(players);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const savePlayersToStorage = (players) => {
-  localStorage.setItem("players", JSON.stringify(players));
 };
 
 const createPlayerRow = (player, index) => {
@@ -161,36 +181,6 @@ const createPlayerRow = (player, index) => {
   return tr;
 };
 
-const handleFilterChange = (e) => {
-  const name = e.target.name;
-  filterState[name] = e.target.value;
-  const filteredPlayers = playerState.players.filter((player) => {
-    if (filterState.college && filterState.position) {
-      return (
-        player.college === filterState.college &&
-        player.position === filterState.position
-      );
-    } else if (filterState.college) {
-      return player.college === filterState.college;
-    } else if (filterState.position) {
-      return player.position === filterState.position;
-    }
-    return player;
-  });
-  renderPlayerRows(filteredPlayers);
-};
-
-const applyMultiSelectFilter = (players) => {
-  playerState.filteredPlayers = players.filter((player) => {
-    return (
-      filterState.college.includes(player.college) ||
-      filterState.position.includes(player.position) ||
-      filterState.name.includes(`${player.firstName} ${player.lastName}`)
-    );
-  });
-  renderPlayerRows(playerState.filteredPlayers);
-};
-
 function renderPlayerRows(playerList) {
   const tbody = document.querySelector("tbody");
   tbody.innerHTML = "";
@@ -203,6 +193,37 @@ function renderPlayerRows(playerList) {
     tbody.append(playerRow);
   }
 }
+
+//--------------------------------
+// FILTERING AND SORTING FUNCTIONS
+//--------------------------------
+
+const applyMultiSelectFilter = (players) => {
+  playerState.filteredPlayers = players.filter((player) => {
+    return (
+      filterState.college.includes(player.college) ||
+      filterState.position.includes(player.position) ||
+      filterState.name.includes(`${player.firstName} ${player.lastName}`)
+    );
+  });
+  renderPlayerRows(playerState.filteredPlayers);
+};
+
+// function that sorts the players array by a given key
+const sortPlayers = (param, playerArray) => {
+  return playerArray.sort((a, b) => {
+    const order = sortingState[param];
+    if (order === "asc") {
+      return a[param] < b[param] ? -1 : a[param] > b[param] ? 1 : 0;
+    } else {
+      return a[param] > b[param] ? -1 : a[param] < b[param] ? 1 : 0;
+    }
+  });
+};
+
+//---------------------------
+// EVENT HANDLER FUNCTIONS
+//---------------------------
 
 // function that updates form state on change event
 const handleInputChange = (event) => {
@@ -235,29 +256,6 @@ const handleFormSubmit = async (event) => {
   }
 };
 
-/*
- TODO:
-1. Initial search/filter shows exact matches (ex. where BOTH college and position match)
-2. If no exact matches, show a message that says "No players found, show partial matches?
-3. update applyMultiSelectFilter to show exact matches
-4. create new function that shows partial matches
-5. add a button that toggles between exact and partial matches
-6. finish setting up controllers on backend with sequelize models
-7. test routes with postman
- */
-
-// function that sorts the players array by a given key
-const sortPlayers = (param, playerArray) => {
-  return playerArray.sort((a, b) => {
-    const order = sortingState[param];
-    if (order === "asc") {
-      return a[param] < b[param] ? -1 : a[param] > b[param] ? 1 : 0;
-    } else {
-      return a[param] > b[param] ? -1 : a[param] < b[param] ? 1 : 0;
-    }
-  });
-};
-
 // function that handles click on sort buttons
 const handleSortClick = (event) => {
   console.log(event.target.dataset);
@@ -281,6 +279,10 @@ const handleSortClick = (event) => {
   renderPlayerRows(sortedPlayers);
 };
 
+//---------------------------
+// EVENT LISTENERS ADDED
+//---------------------------
+
 // add change event listeners to all the input elements on the form
 const addEventListeners = () => {
   formInputs.forEach((input) => {
@@ -293,10 +295,6 @@ const addEventListeners = () => {
 
 // add submit event listener to the form
 form.addEventListener("submit", handleFormSubmit);
-
-// renderPlayerRows(players);
-fetchAllPlayers();
-addEventListeners();
 
 document.getElementById("college-select").addEventListener("change", (e) => {
   filterState.college = collegeSelect.selected();
@@ -324,3 +322,44 @@ document.getElementById("clear-filters").addEventListener("click", (e) => {
   nameSelect.set([]);
   renderPlayerRows(playerState.players);
 });
+
+//---------------------------
+// INITIALIZE APP
+//---------------------------
+
+fetchAllPlayers();
+addEventListeners();
+
+/*
+ TODO:
+1. Initial search/filter shows exact matches (ex. where BOTH college and position match)
+2. If no exact matches, show a message that says "No players found, show partial matches?
+3. update applyMultiSelectFilter to show exact matches
+4. create new function that shows partial matches
+5. add a button that toggles between exact and partial matches
+6. finish setting up controllers on backend with sequelize models
+7. test routes with postman
+ */
+
+// GRAVEYARD
+
+/*
+const handleFilterChange = (e) => {
+  const name = e.target.name;
+  filterState[name] = e.target.value;
+  const filteredPlayers = playerState.players.filter((player) => {
+    if (filterState.college && filterState.position) {
+      return (
+        player.college === filterState.college &&
+        player.position === filterState.position
+      );
+    } else if (filterState.college) {
+      return player.college === filterState.college;
+    } else if (filterState.position) {
+      return player.position === filterState.position;
+    }
+    return player;
+  });
+  renderPlayerRows(filteredPlayers);
+};
+*/
