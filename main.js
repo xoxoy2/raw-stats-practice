@@ -107,6 +107,7 @@ const fetchAllPlayers = async () => {
     console.log(players);
     // return players;
     playerState.players = players;
+    playerState.filteredPlayers = players;
     createAndAppendOptions(players);
     renderPlayerRows(players);
   } catch (error) {
@@ -117,6 +118,15 @@ const fetchAllPlayers = async () => {
 //----------------------------
 // DOM MANIPULATION FUNCTIONS
 //----------------------------
+
+const showNoResultsMessage = () => {
+  const tbody = document.querySelector("tbody");
+  const tr = document.createElement("tr");
+  const td = document.createElement("td");
+  td.innerHTML = `No exact matches found. <span class="no-results"><i>Show partial matches?</i></span>`;
+  tr.append(td);
+  tbody.append(tr);
+};
 
 const createAndAppendOptions = (players) => {
   getColleges(players).forEach((college) => {
@@ -201,12 +211,23 @@ function renderPlayerRows(playerList) {
 const applyMultiSelectFilter = (players) => {
   playerState.filteredPlayers = players.filter((player) => {
     return (
-      filterState.college.includes(player.college) ||
-      filterState.position.includes(player.position) ||
-      filterState.name.includes(`${player.firstName} ${player.lastName}`)
+      (filterState.college.length === 0 ||
+        filterState.college.includes(player.college)) &&
+      (filterState.position.length === 0 ||
+        filterState.position.includes(player.position)) &&
+      (filterState.name.length === 0 ||
+        filterState.name.includes(`${player.firstName} ${player.lastName}`))
     );
   });
   renderPlayerRows(playerState.filteredPlayers);
+  // check if there are no results, and if not, show a message with a button/link to show partial matches
+  if (playerState.filteredPlayers.length === 0) {
+    showNoResultsMessage();
+    // show partial matches click event
+    document.querySelector(".no-results").addEventListener("click", () => {
+      showPartialMatches(playerState.players);
+    });
+  }
 };
 
 // function that sorts the players array by a given key
@@ -230,6 +251,18 @@ const handleInputChange = (event) => {
   const name = event.target.name; // "firstName", "lastName", "touchdowns", "yards"
   formState[name] = event.target.value;
   console.log(formState);
+};
+
+const showPartialMatches = (players) => {
+  playerState.filteredPlayers = players.filter((player) => {
+    return (
+      filterState.college.includes(player.college) ||
+      filterState.position.includes(player.position) ||
+      filterState.name.includes(`${player.firstName} ${player.lastName}`)
+    );
+  });
+
+  renderPlayerRows(playerState.filteredPlayers);
 };
 
 const handleFormSubmit = async (event) => {
@@ -275,7 +308,7 @@ const handleSortClick = (event) => {
   const param = event.target.dataset.param;
   sortingState[param] = sortingState[param] === "asc" ? "desc" : "asc";
   console.log(sortingState);
-  const sortedPlayers = sortPlayers(param, playerState.players);
+  const sortedPlayers = sortPlayers(param, playerState.filteredPlayers);
   renderPlayerRows(sortedPlayers);
 };
 
@@ -300,6 +333,7 @@ document.getElementById("college-select").addEventListener("change", (e) => {
   filterState.college = collegeSelect.selected();
   console.log(filterState);
 });
+
 document.getElementById("position-select").addEventListener("change", (e) => {
   filterState.position = positionSelect.selected();
   console.log(filterState);
@@ -332,13 +366,9 @@ addEventListeners();
 
 /*
  TODO:
-1. Initial search/filter shows exact matches (ex. where BOTH college and position match)
-2. If no exact matches, show a message that says "No players found, show partial matches?
-3. update applyMultiSelectFilter to show exact matches
-4. create new function that shows partial matches
-5. add a button that toggles between exact and partial matches
-6. finish setting up controllers on backend with sequelize models
-7. test routes with postman
+1. On Joshua's screen, connect database
+2. update player controllers
+3. test routes with postman
  */
 
 // GRAVEYARD

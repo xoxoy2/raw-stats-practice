@@ -48,3 +48,9 @@ td {
   display: flex;
   justify-content: space-between;
 }
+
+.no-results {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
