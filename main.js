@@ -366,9 +366,7 @@ addEventListeners();
 
 /*
  TODO:
-1. On Joshua's screen, connect database
-2. update player controllers
-3. test routes with postman
+1:reviw git workflow
  */
 
 // GRAVEYARD
