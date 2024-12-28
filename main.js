@@ -366,7 +366,10 @@ addEventListeners();
 
 /*
  TODO:
-1:reviw git workflow
+1:Finish pull request for seed data
+2:/update add player controller to add player position and college
+3:Test add player with Postman
+
  */
 
 // GRAVEYARD
