@@ -366,9 +366,9 @@ addEventListeners();
 
 /*
  TODO:
-1:Finish pull request for seed data
-2:/update add player controller to add player position and college
-3:Test add player with Postman
+1:Finish pull request for add player
+2:Add player controller and route for adding a position and for adding a college
+3:Add college controller and route for adding a college
 
  */
 
