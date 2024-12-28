@@ -18,7 +18,7 @@ app.use("/api/players", playerRoutes);
 
 // app.use(errorHandler)
 
-sequelize.sync().then(() => {
+sequelize.sync({force:true}).then(() => {
   console.log("Database synced");
   app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

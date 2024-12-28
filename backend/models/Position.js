@@ -10,7 +10,7 @@ const Position = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    position: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
