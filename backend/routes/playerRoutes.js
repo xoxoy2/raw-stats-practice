@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   getAllPlayers,
   addPlayer,
+  updatePlayer,
 } = require("../controllers/playerController.js");
 
 // GET public
@@ -15,4 +16,8 @@ router.get("/", getAllPlayers);
 // Add a player
 router.post("/", addPlayer);
 
+//PUT private
+// /api/players/:id
+//updated player
+router.put("/:id",updatePlayer)
 module.exports = router;

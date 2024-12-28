@@ -5,6 +5,8 @@ dotenv.config();
 const app = express();
 const port = 3000;
 const playerRoutes = require("./routes/playerRoutes.js");
+const collegeRoutes = require("./routes/collegeRoutes.js");
+const positionRoutes = require("./routes/positionRoutes.js");
 const sequelize = require("./config/connection.js");
 
 app.use(express.json());
@@ -15,10 +17,11 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/players", playerRoutes);
-
+app.use("/api/positions", positionRoutes);
+app.use("/api/colleges", collegeRoutes);
 // app.use(errorHandler)
 
-sequelize.sync({force:true}).then(() => {
+sequelize.sync({force:false}).then(() => {
   console.log("Database synced");
   app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

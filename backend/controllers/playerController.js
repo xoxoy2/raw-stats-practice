@@ -14,4 +14,13 @@ const addPlayer = async (req, res) => {
   res.json({ message: "Player added" });
 };
 
-module.exports = { getAllPlayers, addPlayer };
+const updatePlayer= async (req,res) => {
+  try {
+    const updatedPlayer=await Player.update(req.body,{where:{id:req.params.id}})
+    res.json({ message: "Player updated" });
+  } catch (error) {
+    res.status (500).json(error)
+  }
+}
+module.exports = { getAllPlayers, addPlayer,updatePlayer };
+
