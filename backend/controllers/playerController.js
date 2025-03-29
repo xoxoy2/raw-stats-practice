@@ -1,9 +1,20 @@
 // const { players } = require("../data.js");
-const { Player } = require("../models");
+const { Player, College, Position } = require("../models");
 
 const getAllPlayers = async (req, res) => {
   // get all players using Player model
-  const players = await Player.findAll();
+  const players = await Player.findAll({
+    include:[{
+      model:College,
+      attributes:["id","name"],
+      through:{attributes:[]}
+    },
+    {
+      model:Position,
+      attributes:["id","name"],
+      through:{attributes:[]}
+    }]
+  });
   res.json(players);
 };
 
@@ -22,5 +33,34 @@ const updatePlayer= async (req,res) => {
     res.status (500).json(error)
   }
 }
-module.exports = { getAllPlayers, addPlayer,updatePlayer };
+
+const addCollegeToPlayer= async (req,res) => {
+  try {
+   const player= await Player.findByPk(req.params.playerid)
+   const college= await College.findByPk(req.params.collegeid)
+   if (player && college) {
+   const updatedPlayer= await player.addCollege(college)
+   res.json(updatedPlayer)
+   }
+  } catch (error) {
+    res.status (500).json(error)
+  }
+}
+
+const addPositionToPlayer= async (req,res) => {
+  try {
+   const player= await Player.findByPk(req.params.playerid)
+   const position= await Position.findByPk(req.params.positionid)
+   if (player && position) {
+   const updatedPlayer= await player.addPosition(position)
+   res.json(updatedPlayer)
+   }
+  } catch (error) {
+    res.status (500).json(error)
+  }
+}
+
+
+
+module.exports = { getAllPlayers, addPlayer,updatePlayer,addCollegeToPlayer,addPositionToPlayer };
 

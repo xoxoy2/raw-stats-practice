@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllColleges,
+  getAllColleges,createCollege
 } = require("../controllers/collegeController.js");
 
 // GET public
@@ -12,6 +12,6 @@ router.get("/", getAllColleges);
 // POST public
 // /api/colleges
 // Add a college
-//router.post("/", addCollege);
+router.post("/", createCollege);
 
 module.exports = router;

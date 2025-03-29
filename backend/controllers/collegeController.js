@@ -6,4 +6,10 @@ const getAllColleges = async (req, res) => {
   res.json(colleges);
 };
 
-module.exports = { getAllColleges};
+const createCollege = async (req, res) => {
+  // Add a colleges using College model
+  const college= await College.create(req.body)
+  res.json(college);
+};
+
+module.exports = { getAllColleges,createCollege};
