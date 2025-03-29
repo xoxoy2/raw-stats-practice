@@ -4,6 +4,7 @@ const {Op}=require("sequelize")
 const argon2=require("argon2")
 const {User}= require ("../models/User")
 const sequelize = require("../config/connection.js");
+const jwt = require("jsonwebtoken")
 console.log (User)
 
 // const getAllPlayers = async (req, res) => {
@@ -49,6 +50,11 @@ const signUpUser = async (req, res) => {
       firstName: req.body.firstName,
       lastName:req.body.lastName
      });
+     const authtoken = jwt.sign ({id:user.id}, process.env.JWT_SECRET,{expiresIn:"365d"})
+     res.cookie("session",authtoken,{
+      maxAge:1000*60*60*24*365,
+      httpOnly:true
+     })
     res.json({ message: "User added",success:true,data:user });
   } catch (error) {
     console.log (error)
