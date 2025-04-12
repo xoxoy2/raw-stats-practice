@@ -53,12 +53,63 @@ const signUpUser = async (req, res) => {
      const authtoken = jwt.sign ({id:user.id}, process.env.JWT_SECRET,{expiresIn:"365d"})
      res.cookie("session",authtoken,{
       maxAge:1000*60*60*24*365,
-      httpOnly:true
+      httpOnly:true,
+      secure:true,
+      sameSite:"none",
+      path:"/"
      })
+     console.log (authtoken)
     res.json({ message: "User added",success:true,data:user });
   } catch (error) {
     console.log (error)
     res.json({ message: "Unsuccessful sign up",success:false,data:null });
+
+  }
+
+};
+
+
+const LoginUser = async (req, res) => {
+  console.log(req.body);
+  console.log ( "sequelizeModel",sequelize.models.User)
+  try {
+    const foundExistingUser= await sequelize.models.User.findOne({
+      where:{
+          [Op.or]: [
+              {
+                  email:req.body.email
+              },
+             
+          ]
+      }
+    })
+    console.log("exisiting user found",foundExistingUser)
+    if (!foundExistingUser?.id){
+      res.json ({success:false,message: "Could not log in"})
+      return
+    }
+    const validateHash = await argon2.verify(foundExistingUser?.passwordHash,req.body.password);
+    if (!validateHash){
+      res.json ({success:false,message: "Could not log in"})
+      return
+    }
+
+     const authtoken = jwt.sign ({id:foundExistingUser.id}, process.env.JWT_SECRET,{expiresIn:"365d"})
+     res.cookie("session",authtoken,{
+      maxAge:1000*60*60*24*365,
+      domain:"127.0.0.1"
+      // httpOnly:true,
+      // secure:true,
+      // sameSite:"none",
+      // path:"/"
+     })
+     res.set("x-test","test")
+     console.log (authtoken)
+    res.json({ message: "User logged in",success:true,data:foundExistingUser });
+    return
+  } catch (error) {
+    console.log (error)
+    res.json({ message: "Unsuccessful log in",success:false,data:null });
 
   }
 
@@ -101,4 +152,4 @@ const signUpUser = async (req, res) => {
 
 
 
-module.exports = { signUpUser };
+module.exports = { signUpUser,LoginUser };

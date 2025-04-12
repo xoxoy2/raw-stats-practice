@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const {
-  signUpUser
+  signUpUser,
+  LoginUser
 } = require("../controllers/userController.js");
 
 // GET public
@@ -30,5 +31,6 @@ const {
 //router.put("/:playerid/position/:positionid",addPositionToPlayer)
 
 router.post("/signup",signUpUser)
+router.post("/login",LoginUser)
 
 module.exports = router;
