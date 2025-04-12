@@ -1,8 +1,8 @@
-const signUpForm=document.getElementById("sign-up-form")
+const logInForm=document.getElementById("log-in-form")
 
 
 
-signUpForm.onsubmit=async(event)=>{
+logInForm.onsubmit=async(event)=>{
     event.preventDefault()
     const submitData={}
     const formData=new FormData(event.target)
@@ -10,12 +10,13 @@ signUpForm.onsubmit=async(event)=>{
         console.log(key,value)
         submitData[key]=value
     }
-    const res=await fetch("http://localhost:3000/api/users/signup",{
+    const res=await fetch("http://localhost:3000/api/users/login",{
         method:"POST",
         headers:{
             "content-type":"application/json"
         },
-        body:JSON.stringify(submitData)
+        body:JSON.stringify(submitData),
+        credentials:"include"
     })
     const resJson=await res.json()
     console.log (resJson)

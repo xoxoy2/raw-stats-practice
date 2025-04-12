@@ -368,6 +368,9 @@ addEventListeners();
  TODO:
 1:Set up login page (Look at player model for required fields) allow null:false=required
 2:Long term to do, think about data and relationships archtitecture
+3: Switching git icon whole different set
+4: Upload to GitHub
+5: See why cookie didn't save in Inspect
 
  */
 
