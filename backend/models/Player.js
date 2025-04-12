@@ -10,6 +10,16 @@ const Player = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    userName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,

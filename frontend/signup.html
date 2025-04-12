@@ -31,15 +31,43 @@
       </nav>
     </header>
 <div>
-  <div>
-    <h1>
-      Raw Stats
-    </h1>
-  </div>
-<div>
-<a href="signup.html">Sign up</a>
-<a href="login.html">Log in</a>
-</div>
+ <div>
+<h1>
+    Sign up
+</h1>
+ </div>
+<form id="sign-up-form">
+    <div>
+        <label>
+            First Name
+        </label>
+        <input type="text" name="firstName">
+    </div>
+    <div>
+        <label>
+            Last Name
+        </label>
+        <input type="text" name="lastName">
+    </div>
+    <div>
+        <label>
+            Email
+        </label>
+        <input type="email" name="email">
+    </div>
+
+    <div>
+        <label>
+            Password
+        </label>
+        <input type="password" name="password">
+    </div>
+    <div>
+        <button type="submit">
+            Sign Up
+        </button>
+    </div>
+</form>
 
 </div>
     
@@ -49,5 +77,6 @@
     <footer>
       <p>copyright 2024</p>
     </footer>
+    <script src="/src/signup.js"></script>
   </body>
 </html>
