@@ -9,9 +9,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script src="/src/base.js" type="module"></script>
+    <!-- <script src="main.js" defer></script> -->
+      <script src="/src/base.js" type="module"></script>
     <script src="/src/header.js" type="module"></script>
-    <script src="/src/main.js" defer></script>
     <link
       href="https://cdn.jsdelivr.net/npm/slim-select@1.27.1/dist/slimselect.min.css"
       rel="stylesheet"
@@ -24,7 +24,7 @@
   </head>
   <body>
     <!-- header is specific container tag for the header on the page, use only 1 -->
-    <header>
+     <header>
       <!-- nav is a container tag for links -->
       <nav>
         <a href="/">Home</a>
@@ -34,15 +34,31 @@
       </nav>
     </header>
 <div>
-  <div>
-    <h1>
-      Raw Stats
-    </h1>
-  </div>
-<div>
-<a href="/signup">Sign up</a>
-<a href="login.html">Log in</a>
-</div>
+ <div>
+<h1>
+    My profile
+</h1>
+ </div>
+<form id="profile-edit-form">
+    <div>
+        <label>
+            First Name
+        </label>
+        <input type="text" name="firstName">
+    </div>
+    <div>
+        <label>
+            Last Name
+        </label>
+        <input type="text" name="lastName">
+    </div>
+    
+    <div>
+        <button type="submit">
+            Edit profile
+        </button>
+    </div>
+</form>
 
 </div>
     
@@ -52,6 +68,6 @@
     <footer>
       <p>copyright 2024</p>
     </footer>
+    <script type="module" src="/src/profile.js"></script>
   </body>
 </html>
-

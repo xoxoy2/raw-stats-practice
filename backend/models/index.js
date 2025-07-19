@@ -3,6 +3,7 @@ const Position = require("./Position");
 const College = require("./College");
 const PlayerCollege = require("./PlayerCollege");
 const PlayerPosition = require("./PlayerPosition");
+const User=require ("./User");
 
 // set up many to many relationship between player and position
 Player.belongsToMany(Position, {
@@ -26,4 +27,4 @@ College.belongsToMany(Player, {
   foreignKey: "college_id",
 });
 
-module.exports = { Player, Position, College, PlayerCollege, PlayerPosition };
+module.exports = { Player, Position, College, PlayerCollege, PlayerPosition, User };

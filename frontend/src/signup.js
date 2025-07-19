@@ -19,7 +19,8 @@ signUpForm.onsubmit=async(event)=>{
     })
     const resJson=await res.json()
     console.log (resJson)
-    // if (resJson.success){
-    //     location.href="/raw-stats"
-    // }
+    if (resJson.success){
+        localStorage.setItem("auth",resJson.token)
+        location.href="/raw-stats"
+    }
 }

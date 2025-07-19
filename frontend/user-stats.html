@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <script src="main.js" defer></script> -->
+  <script src="/src/base.js" type="module"></script>
+  <script src="/src/header.js" type="module"></script>
+  <link href="https://cdn.jsdelivr.net/npm/slim-select@1.27.1/dist/slimselect.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/slim-select@1.27.1/dist/slimselect.min.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raw-Stats.com</title>
+</head>
+
+<body>
+  <!-- header is specific container tag for the header on the page, use only 1 -->
+  <header>
+    <!-- nav is a container tag for links -->
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/profile">Profile</a>
+      <div id="header-user-info"></div>
+    </nav>
+  </header>
+  <div>
+    <div id="stats-top">
+      
+      <div class="stats-top-picture">
+      <div>
+        <div class="stats-top-picture-profile">
+          <img style="width:5rem" src="/icons/user-icon-default.jpg" alt="">
+        </div>
+        <div>
+          <input id="user-stats-profile-img-upload-input" type="file">
+        </div>
+      </div>
+      </div>
+
+    <div class="stats-top-general-info">
+    <div>
+      <p>
+        First name
+      </p>
+      <p>
+        Last name
+      </p>
+    </div>
+    <div>
+      <p>
+        5'5
+      </p>
+<p>
+  120 lbs
+</p>
+<div>
+  <p>
+    11/12/1995 
+  </p>
+  <p>
+    (29 years old)
+  </p>
+</div>
+<p>
+Scorpio &#9807;
+</p>
+<p>
+  ENTJ (Commander)
+</p>
+    </div>
+    </div>
+    
+  </div>  
+       
+
+    <div id="stats-bottom">
+      <div>
+        <button id="stats-edit-add-IQ">Add IQ</button>
+        <button>Add AP tests</button>
+        <button>Add sales stats</button>
+      </div>
+      <form id="stats-edit-form">
+        <!-- <div id=stats-edit-form-category>
+          <div>
+            <label for="">Add IQ</label>
+          </div>
+        </div> -->
+        <div id="stats-edit-form-table">
+
+        </div>
+
+        <div>
+          <button type="submit">
+            Edit stats
+          </button>
+        </div>
+      </form>
+    </div>
+
+
+
+  </div>
+
+
+
+
+  <footer>
+    <p>copyright 2024</p>
+  </footer>
+  <script type="module" src="/src/user-stats.js"></script>
+</body>
+
+</html>

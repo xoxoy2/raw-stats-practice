@@ -51,15 +51,15 @@ const signUpUser = async (req, res) => {
       lastName:req.body.lastName
      });
      const authtoken = jwt.sign ({id:user.id}, process.env.JWT_SECRET,{expiresIn:"365d"})
-     res.cookie("session",authtoken,{
-      maxAge:1000*60*60*24*365,
-      httpOnly:true,
-      secure:true,
-      sameSite:"none",
-      path:"/"
-     })
-     console.log (authtoken)
-    res.json({ message: "User added",success:true,data:user });
+    //  res.cookie("session",authtoken,{
+    //   maxAge:1000*60*60*24*365,
+    //   httpOnly:true,
+    //   secure:true,
+    //   sameSite:"none",
+    //   path:"/"
+    //  })
+    //  console.log (authtoken)
+    res.json({ message: "User added",success:true,data:user,token:authtoken });
   } catch (error) {
     console.log (error)
     res.json({ message: "Unsuccessful sign up",success:false,data:null });
@@ -95,17 +95,17 @@ const LoginUser = async (req, res) => {
     }
 
      const authtoken = jwt.sign ({id:foundExistingUser.id}, process.env.JWT_SECRET,{expiresIn:"365d"})
-     res.cookie("session",authtoken,{
-      maxAge:1000*60*60*24*365,
-      domain:"127.0.0.1"
-      // httpOnly:true,
-      // secure:true,
-      // sameSite:"none",
-      // path:"/"
-     })
-     res.set("x-test","test")
-     console.log (authtoken)
-    res.json({ message: "User logged in",success:true,data:foundExistingUser });
+    //  res.cookie("session",authtoken,{
+    //   maxAge:1000*60*60*24*365,
+    //   domain:"127.0.0.1"
+    //   // httpOnly:true,
+    //   // secure:true,
+    //   // sameSite:"none",
+    //   // path:"/"
+    //  })
+    //  res.set("x-test","test")
+    //  console.log (authtoken)
+    res.json({ message: "User logged in",success:true,data:foundExistingUser,token:authtoken });
     return
   } catch (error) {
     console.log (error)
@@ -114,6 +114,76 @@ const LoginUser = async (req, res) => {
   }
 
 };
+
+const getUserProfile = async (req, res) => {
+  console.log(req.body);
+  const authtoken=req.headers.authorization
+  if (!authtoken){
+    res.json({success:false,data:null,message:"unauthorized"})
+  }
+  const verifiedSession=await jwt.verify (authtoken,process.env.JWT_SECRET)
+  console.log (verifiedSession,"verifiedSession")
+  if (!verifiedSession){
+    res.json({success:false,data:null,message:"unauthorized"})
+  }
+  try {
+    const foundExistingUser= await sequelize.models.User.findOne({
+      where:{
+        id:verifiedSession.id
+      },
+      attributes:{
+        exclude:["createdAt","passwordHash","updatedAt"]
+      }
+    })
+    console.log("exisiting user found",foundExistingUser)
+    if (!foundExistingUser?.id){
+      res.json ({success:false,message: "Could not find profile"})
+      return
+    }
+   
+
+    
+    res.json({ message: "User profile",success:true,data:foundExistingUser, });
+    return
+  } catch (error) {
+    console.log (error)
+    res.json({ message: "Unsuccessful log in",success:false,data:null });
+
+  }
+
+};
+
+
+const updateUserProfile = async (req, res) => {
+  console.log(req.body);
+  const authtoken=req.headers.authorization
+  const verifiedSession=await jwt.verify (authtoken,process.env.JWT_SECRET)
+  console.log (verifiedSession,"verifiedSession")
+  try {
+    const foundExistingUser= await sequelize.models.User.update(req.body,{
+      where:{
+        id:verifiedSession.id
+      }
+      
+    })
+    console.log("exisiting user found",foundExistingUser)
+    // if (!foundExistingUser?.id){
+    //   res.json ({success:false,message: "Could not find profile"})
+    //   return
+    // }
+   
+
+    
+    res.json({ message: "User profile",success:true,data:foundExistingUser, });
+    return
+  } catch (error) {
+    console.log (error)
+    res.json({ message: "Unsuccessful log in",success:false,data:null });
+
+  }
+
+}
+
 
 // const updatePlayer= async (req,res) => {
 //   try {
@@ -152,4 +222,4 @@ const LoginUser = async (req, res) => {
 
 
 
-module.exports = { signUpUser,LoginUser };
+module.exports = { signUpUser,LoginUser,getUserProfile,updateUserProfile };

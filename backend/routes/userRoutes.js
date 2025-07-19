@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const {
   signUpUser,
-  LoginUser
+  LoginUser,
+  getUserProfile,
+  updateUserProfile,
 } = require("../controllers/userController.js");
 
 // GET public
@@ -32,5 +34,7 @@ const {
 
 router.post("/signup",signUpUser)
 router.post("/login",LoginUser)
+router.get("/profile",getUserProfile)
+router.put("/profile",updateUserProfile)
 
 module.exports = router;

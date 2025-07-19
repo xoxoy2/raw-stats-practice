@@ -1,0 +1,6 @@
+- Make table for stats dynamic
+- Upload tables to server through protected route
+- Look into web componets
+- Long term to do, think about data and relationships archtitecture
+- Change storing localstorage tokens to use cookies
+- Flush out userstore

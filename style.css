@@ -54,3 +54,10 @@ td {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.stats-top-picture-profile{
+  width:5rem;
+}
+.stats-top-picture-profile img{
+  width:100%;
+}
