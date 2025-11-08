@@ -1,6 +1,10 @@
-- Make table for stats dynamic
 - Upload tables to server through protected route
 - Look into web componets
 - Long term to do, think about data and relationships archtitecture
 - Change storing localstorage tokens to use cookies
 - Flush out userstore
+-Make a consistent set of URLs for all pages in the app
+-Make a table edit submit button and send the values to the API
+-Display the value of the saved stats in the correct corresponding table
+-Admin notification
+-*Create separate auth roles for admins and ordinary users

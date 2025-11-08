@@ -10,7 +10,8 @@ const positionRoutes = require("./routes/positionRoutes.js");
 const userRoutes =require("./routes/userRoutes.js");
 const sequelize = require("./config/connection.js");
 const {User}=require("./models")
-console.log (User)
+const userStatsRoutes=require("./routes/userStatsRoutes.js")
+
 
 app.use(express.json());
 app.use(cors(
@@ -28,6 +29,7 @@ app.use("/api/players", playerRoutes);
 app.use("/api/positions", positionRoutes);
 app.use("/api/colleges", collegeRoutes);
 app.use ("/api/users", userRoutes);
+app.use("/api/user-stats",userStatsRoutes)
 // app.use(errorHandler)
 
 sequelize.sync({force:false}).then(() => {

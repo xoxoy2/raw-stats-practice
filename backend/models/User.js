@@ -1,5 +1,6 @@
 const sequelize = require("../config/connection.js");
 const { Model, DataTypes } = require("sequelize");
+const{UserStats}= require ("./UserStats")
 
 const User = sequelize.define(
   "User",
@@ -46,6 +47,9 @@ const User = sequelize.define(
   //   //modelName: "user",
   // }
 );
+
+User.hasMany(sequelize.models.UserStats,{foreignKey:"userId",onDelete:"CASCADE"})
+sequelize.models.UserStats.belongsTo(User,{foreignKey:"userId"})
 
 console.log("userModel",User,sequelize.models.User)
 

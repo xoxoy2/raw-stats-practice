@@ -1,16 +1,14 @@
 import { signal } from "../signals";
 
-class Userstore {
+class Statsstore {
     constructor(){
-        this.firstName=signal("")
-        this.lastName=signal("")
-        this.email=signal("")
-        this.authStatus=signal(null)
-        this.statsCategories=signal([])
+        this.iqStats=signal(null)
+        this.apStats=signal(null)
+        this.salesStats=signal(null)
     }
     async initialize(){
         try {
-             const res=await fetch("http://localhost:3000/api/users/profile",{
+             const res=await fetch("http://localhost:3000/api/user-stats/view",{
             headers:{
                 "Authorization":localStorage.getItem("auth")
             }
@@ -21,10 +19,9 @@ class Userstore {
             this.authStatus.value=false 
             return 
         }
-        this.firstName.value=resJson.data?.firstName 
-        this.lastName.value=resJson.data?.lastName
-        this.email.value=resJson.data?.email
-        this.authStatus.value=true
+        this.iqStats.value=resJson.data.find ((item)=>item.category==="IQ")
+        this.apStats.value=resJson.data.find ((item)=>item.category==="AP")
+        this.salesStats.value=resJson.data.find ((item)=>item.category==="Sales")
         } catch (error) {
             console.log(error)
             this.authStatus.value=false
@@ -32,4 +29,4 @@ class Userstore {
     }
 
  }
- export const userstore=new Userstore ()
+ export const statsstore=new Statsstore ()
