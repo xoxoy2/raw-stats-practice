@@ -8,3 +8,4 @@
 -Display the value of the saved stats in the correct corresponding table
 -Admin notification
 -*Create separate auth roles for admins and ordinary users
+-Render table for review stats

@@ -82,7 +82,9 @@ try {
   }
 
    const userStatsResult= await sequelize.models.UserStats.findAll(
-  
+   {
+    include: [{ model: sequelize.models.User, attributes: ['userName'] }]
+   }
     
    )
     console.log("Stats results",userStatsResult)
@@ -94,6 +96,69 @@ try {
 }
 };
 
+const adminRejectStats = async (req, res) => {
+try {
+  
+   const authtoken=req.headers.authorization
+  if (!authtoken){
+    res.json({success:false,data:null,message:"unauthorized"})
+  }
+  const verifiedSession=await jwt.verify (authtoken,process.env.JWT_SECRET)
+  console.log (verifiedSession,"verifiedSession")
+  if (!verifiedSession){
+    res.json({success:false,data:null,message:"unauthorized"})
+    return
+  }
+
+   const userStatsResult= await sequelize.models.UserStats.update(
+   {
+    reviewStatus:"rejected"
+   },
+   {
+    where:{id:req.params.id}
+   }
+    
+   )
+    console.log("Stats results",userStatsResult)
+    res.json({ message: "Admin user stats retrieved",success:true,data:userStatsResult});
+
+} catch (error) {
+ console.log (error)
+    res.json({ message: "Admin user stats error",success:false,data:null });  
+}
+};
+
+const adminApproveStats = async (req, res) => {
+try {
+  
+   const authtoken=req.headers.authorization
+  if (!authtoken){
+    res.json({success:false,data:null,message:"unauthorized"})
+  }
+  const verifiedSession=await jwt.verify (authtoken,process.env.JWT_SECRET)
+  console.log (verifiedSession,"verifiedSession")
+  if (!verifiedSession){
+    res.json({success:false,data:null,message:"unauthorized"})
+    return
+  }
+
+   const userStatsResult= await sequelize.models.UserStats.update(
+   {
+    reviewStatus:"approved"
+   },
+   {
+    where:{id:req.params.id}
+   }
+    
+   )
+    console.log("Stats results",userStatsResult)
+    res.json({ message: "Admin user stats retrieved",success:true,data:userStatsResult});
+
+} catch (error) {
+ console.log (error)
+    res.json({ message: "Admin user stats error",success:false,data:null });  
+}
+};
 
 const updateUserStats = async (req, res) => {
 try {
@@ -125,4 +190,4 @@ try {
 }
 };
 
-module.exports = {submitTableForReview, getUserStats, updateUserStats, adminGetAllUserStats};
+module.exports = {submitTableForReview, getUserStats, updateUserStats, adminGetAllUserStats, adminRejectStats, adminApproveStats};

@@ -1,0 +1,107 @@
+Date : 2025-11-22 12:13:06
+Directory : c:\Users\joshi\Documents\raw-stats-practice
+Total : 60 files,  2214 codes, 940 comments, 440 blanks, all 3594 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         39 |      1,259 |        895 |        311 |      2,465 |
+| HTML       |         13 |        724 |         43 |         95 |        862 |
+| PostCSS    |          3 |        178 |          2 |         31 |        211 |
+| JSON       |          3 |         41 |          0 |          3 |         44 |
+| Markdown   |          1 |         11 |          0 |          0 |         11 |
+| XML        |          1 |          1 |          0 |          0 |          1 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                  | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                     |         60 |      2,214 |        940 |        440 |      3,594 |
+| . (Files)                                                                             |          9 |        327 |        363 |         91 |        781 |
+| backend                                                                               |         28 |        847 |        151 |        156 |      1,154 |
+| backend (Files)                                                                       |          3 |        109 |          1 |         11 |        121 |
+| backend\config                                                                        |          1 |          6 |          0 |          3 |          9 |
+| backend\controllers                                                                   |          5 |        292 |         84 |         68 |        444 |
+| backend\data                                                                          |          2 |         58 |          1 |          4 |         63 |
+| backend\middleware                                                                    |          2 |          0 |          0 |          2 |          2 |
+| backend\models                                                                        |          8 |        286 |         16 |         36 |        338 |
+| backend\routes                                                                        |          5 |         52 |         49 |         26 |        127 |
+| backend\seeds                                                                         |          2 |         44 |          0 |          6 |         50 |
+| frontend                                                                              |         22 |      1,018 |        426 |        190 |      1,634 |
+| frontend (Files)                                                                      |          7 |        424 |         25 |         56 |        505 |
+| frontend\admin                                                                        |          1 |         50 |          4 |         11 |         65 |
+| frontend\src                                                                          |         14 |        544 |        397 |        123 |      1,064 |
+| frontend\src (Files)                                                                  |         11 |        444 |        396 |        111 |        951 |
+| frontend\src\admin                                                                    |          1 |         37 |          1 |          8 |         46 |
+| frontend\src\stores                                                                   |          2 |         63 |          0 |          4 |         67 |
+| js                                                                                    |          1 |         22 |          0 |          3 |         25 |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                              | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\joshi\Documents\raw-stats-practice\about.html                                | HTML       |         15 |          0 |          1 |         16 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\config\connection.js              | JavaScript |          6 |          0 |          3 |          9 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\controllers\collegeController.js  | JavaScript |         10 |          2 |          3 |         15 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\controllers\playerController.js   | JavaScript |         54 |          3 |         10 |         67 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\controllers\positionController.js | JavaScript |          6 |          1 |          2 |          9 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\controllers\statsController.js    | JavaScript |        101 |          6 |         21 |        128 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\controllers\userController.js     | JavaScript |        121 |         72 |         32 |        225 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\data\data.js                      | JavaScript |         58 |          1 |          3 |         62 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\data\players.json                 | JSON       |          0 |          0 |          1 |          1 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\http-server.js                    | JavaScript |         48 |          0 |          4 |         52 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\middleware\auth.js                | JavaScript |          0 |          0 |          1 |          1 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\middleware\errorHandler.js        | JavaScript |          0 |          0 |          1 |          1 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\models\College.js                 | JavaScript |         25 |          0 |          3 |         28 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\models\Player.js                  | JavaScript |         67 |          0 |          3 |         70 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\models\PlayerCollege.js           | JavaScript |         35 |          0 |          3 |         38 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\models\PlayerPosition.js          | JavaScript |         36 |          0 |          3 |         39 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\models\Position.js                | JavaScript |         25 |          0 |          3 |         28 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\models\User.js                    | JavaScript |         43 |          7 |          7 |         57 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\models\UserStats.js               | JavaScript |         32 |          7 |          8 |         47 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\models\index.js                   | JavaScript |         23 |          2 |          6 |         31 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\package.json                      | JSON       |         27 |          0 |          1 |         28 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\routes\collegeRoutes.js           | JavaScript |          8 |          6 |          3 |         17 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\routes\playerRoutes.js            | JavaScript |         15 |         15 |          7 |         37 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\routes\positionRoutes.js          | JavaScript |          7 |          8 |          3 |         18 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\routes\userRoutes.js              | JavaScript |         13 |         20 |          8 |         41 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\routes\userStatsRoutes.js         | JavaScript |          9 |          0 |          5 |         14 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\seeds\seed.js                     | JavaScript |         31 |          0 |          5 |         36 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\seeds\seeddata.js                 | JavaScript |         13 |          0 |          1 |         14 |
+| c:\Users\joshi\Documents\raw-stats-practice\backend\server.js                         | JavaScript |         34 |          1 |          6 |         41 |
+| c:\Users\joshi\Documents\raw-stats-practice\contact.html                              | HTML       |          0 |          0 |          1 |          1 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\admin\stats-review.html          | HTML       |         50 |          4 |         11 |         65 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\index.html                       | HTML       |         48 |          2 |          8 |         58 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\login.html                       | HTML       |         61 |          2 |          9 |         72 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\package.json                     | JSON       |         14 |          0 |          1 |         15 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\profile.html                     | HTML       |         63 |          3 |          8 |         74 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\raw-stats.html                   | HTML       |         72 |          8 |          4 |         84 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\signup.html                      | HTML       |         73 |          2 |          8 |         83 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\admin\stats-review.js        | JavaScript |         37 |          1 |          8 |         46 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\base.js                      | JavaScript |          9 |          0 |          1 |         10 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\header.js                    | JavaScript |          9 |          0 |          1 |         10 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\javascript.svg               | XML        |          1 |          0 |          0 |          1 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\logIn.js                     | JavaScript |         24 |          0 |          3 |         27 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\main.js                      | JavaScript |          0 |        347 |         50 |        397 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\profile.js                   | JavaScript |         38 |         17 |          3 |         58 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\signals.js                   | JavaScript |         31 |          0 |          5 |         36 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\signup.js                    | JavaScript |         23 |          0 |          3 |         26 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\stores\stats.js              | JavaScript |         30 |          0 |          2 |         32 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\stores\user.js               | JavaScript |         33 |          0 |          2 |         35 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\style.css                    | PostCSS    |         91 |          1 |         18 |        110 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\user-stats.css               | PostCSS    |         35 |          0 |          2 |         37 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\src\user-stats.js                | JavaScript |        183 |         31 |         25 |        239 |
+| c:\Users\joshi\Documents\raw-stats-practice\frontend\user-stats.html                  | HTML       |         93 |          8 |         18 |        119 |
+| c:\Users\joshi\Documents\raw-stats-practice\index.html                                | HTML       |         45 |          2 |          7 |         54 |
+| c:\Users\joshi\Documents\raw-stats-practice\js\signup.js                              | JavaScript |         22 |          0 |          3 |         25 |
+| c:\Users\joshi\Documents\raw-stats-practice\login.html                                | HTML       |         60 |          2 |          8 |         70 |
+| c:\Users\joshi\Documents\raw-stats-practice\main.js                                   | JavaScript |          0 |        348 |         51 |        399 |
+| c:\Users\joshi\Documents\raw-stats-practice\notes.md                                  | Markdown   |         11 |          0 |          0 |         11 |
+| c:\Users\joshi\Documents\raw-stats-practice\raw-stats.html                            | HTML       |         71 |          8 |          4 |         83 |
+| c:\Users\joshi\Documents\raw-stats-practice\signup.html                               | HTML       |         73 |          2 |          8 |         83 |
+| c:\Users\joshi\Documents\raw-stats-practice\style.css                                 | PostCSS    |         52 |          1 |         11 |         64 |
+| Total                                                                                 |            |      2,214 |        940 |        440 |      3,594 |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
